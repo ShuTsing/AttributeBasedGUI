@@ -306,4 +306,21 @@ public class FieldTreeNode
         
         return depthA > depthB ? a : b;
     }
+
+    public override string ToString()
+    {
+        Queue<FieldTreeNode> queue = new Queue<FieldTreeNode>();
+        queue.Enqueue(this);
+        string result = "";
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+            result += node.Name + "\n";
+            foreach (var child in node._children)
+            {
+                queue.Enqueue(child);
+            }
+        }
+        return result;
+    }
 }
