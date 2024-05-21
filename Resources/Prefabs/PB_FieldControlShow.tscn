@@ -14,3 +14,20 @@ theme_override_constants/margin_bottom = 4
 
 [node name="Body" parent="." instance=ExtResource("1_4iomx")]
 layout_mode = 2
+
+[node name="FileButton" parent="Body/Content/MarginContainer2/ScrollContainer/MarginContainer/VBoxContainer/StringField/Entity" index="1"]
+visible = false
+
+[node name="FolderButton" parent="Body/Content/MarginContainer2/ScrollContainer/MarginContainer/VBoxContainer/StringField/Entity" index="2"]
+visible = false
+
+[node name="InlineButton" parent="Body/Content/MarginContainer2/ScrollContainer/MarginContainer/VBoxContainer/StringField/Entity" index="3"]
+visible = false
+
+[node name="ColorPickerButton" parent="Body/Content/MarginContainer2/ScrollContainer/MarginContainer/VBoxContainer/ColorField/Entity" index="0"]
+text = ""
+
+[node name="Button" parent="Body/Content/MarginContainer2/ScrollContainer/MarginContainer/VBoxContainer/MethodButton" index="0"]
+theme_override_font_sizes/font_size = 15
+
+[editable path="Body"]
