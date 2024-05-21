@@ -41,7 +41,7 @@ public class GroupAttribute : Attribute
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
 public class BoxGroupAttribute : GroupAttribute
 {
-    public BoxGroupAttribute(string labelText, bool showLabel = true, bool centerLabel = false) : base(labelText, showLabel, centerLabel)
+    public BoxGroupAttribute(string group, bool showLabel = true, bool centerLabel = false) : base(group, showLabel, centerLabel)
     {
     }
 }

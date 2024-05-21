@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dcymlnluxu588"]
 
 [ext_resource type="Texture2D" uid="uid://b03gb6u1y6j7i" path="res://addons/AttributeBasedGUI/Resources/Arts/Textures/Icons/subtract-line.png" id="1_2g8s8"]
-[ext_resource type="StyleBox" path="res://addons/AttributeBasedGUI/Resources/ControlStyles/StyleBoxes/SB_ListPanel.tres" id="1_o42vr"]
+[ext_resource type="StyleBox" uid="uid://btkg1av1opy8y" path="res://addons/AttributeBasedGUI/Resources/ControlStyles/StyleBoxes/SB_ListPanel.tres" id="1_o42vr"]
 [ext_resource type="Texture2D" uid="uid://ce52iyyt3j7hi" path="res://addons/AttributeBasedGUI/Resources/Arts/Textures/Icons/close-line.png" id="2_alwfk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yumb1"]

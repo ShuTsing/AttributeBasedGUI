@@ -120,50 +120,6 @@ public class FieldTreeNode
 
         return FieldTreeNodeType.Unknown;
     }
-    
-    private FieldTreeNodeType NodeTypeByValue(System.Object value)
-    {
-        if (value is int or short or long or byte or sbyte or ushort or uint or ulong)
-            return FieldTreeNodeType.Integer;
-        if (value is float or double)
-            return FieldTreeNodeType.Float;
-        if (value is string)
-            return FieldTreeNodeType.String;
-        if (value is bool)
-            return FieldTreeNodeType.Boolean;
-        if (value is Enum)
-            return FieldTreeNodeType.Enum;
-        if (value is Color)
-            return FieldTreeNodeType.Color;
-        if (value is Vector2)
-            return FieldTreeNodeType.Vector2;
-        if (value is Vector3)
-            return FieldTreeNodeType.Vector3;
-        if (value is Vector4)
-            return FieldTreeNodeType.Vector4;
-        if (value is Vector2I)
-            return FieldTreeNodeType.Vector2I;
-        if (value is Vector3I)
-            return FieldTreeNodeType.Vector3I;
-        if (value is Vector4I)
-            return FieldTreeNodeType.Vector4I;
-        if (value.GetType().IsArray)
-            return FieldTreeNodeType.Array;
-        if (value.GetType().IsGenericType)
-        {
-            var genericType = value.GetType().GetGenericTypeDefinition();
-            if (genericType == typeof(List<>))
-                return FieldTreeNodeType.List;
-            if (genericType == typeof(Dictionary<,>))
-                return FieldTreeNodeType.Dictionary;
-            if (genericType == typeof(HashSet<>))
-                return FieldTreeNodeType.HashSet;
-        }
-        if (value.GetType().IsClass || value.GetType().IsValueType && value.GetType().IsPrimitive == false)
-            return FieldTreeNodeType.Object;
-
-        return FieldTreeNodeType.Unknown;
-    }
 
     public FieldTreeNode(MemberInfo memberInfo, FieldTreeNode parent = null)
     {
@@ -202,17 +158,17 @@ public class FieldTreeNode
         }
         
 
-        if (Parent != null)
+        if (parent != null)
         {
             var groups = memberInfo.GetCustomAttributes<GroupAttribute>();
             foreach (var group in groups)
             {
                 if (group is BoxGroupAttribute boxGroup)
                 {
-                    var node = Parent.GetOrCreateChildGroups(group.Group);
+                    var node = parent.GetOrCreateChildGroups(group.Group);
                     node.NodeType = FieldTreeNodeType.BoxGroup;
                     Parent = MaxDepthNode(Parent, node);
-                    return;
+                    break;
                 }
             }
             Parent.AddChildNode(this);
@@ -227,15 +183,12 @@ public class FieldTreeNode
             foreach (var member in members)
             {
                 var childNode = new FieldTreeNode(member, this);
-                AddChildNode(childNode);
             }
         }
-
-        if (NodeType == FieldTreeNodeType.Array)
+        else if (NodeType == FieldTreeNodeType.Array)
         {
             var elementType = valueType.GetElementType();
             var childNode = new FieldTreeNode(elementType, this);
-            AddChildNode(childNode);
         }
         else if (((int)NodeType & CollectionTypeMask) != 0)
         {
@@ -243,7 +196,6 @@ public class FieldTreeNode
             foreach (var genericType in genericTypes)
             {
                 var childNode = new FieldTreeNode(genericType, this);
-                AddChildNode(childNode);
             }
         }
     }
@@ -306,21 +258,20 @@ public class FieldTreeNode
         
         return depthA > depthB ? a : b;
     }
+    
+    private void RunToString(FieldTreeNode node, ref string result, string tabStr)
+    {
+        result += $"{tabStr}{node.Name}: {node.NodeType}\n";
+        foreach (var child in node._children)
+        {
+            RunToString(child, ref result, tabStr + "  ");
+        }
+    }
 
     public override string ToString()
     {
-        Queue<FieldTreeNode> queue = new Queue<FieldTreeNode>();
-        queue.Enqueue(this);
         string result = "";
-        while (queue.Count > 0)
-        {
-            var node = queue.Dequeue();
-            result += node.Name + "\n";
-            foreach (var child in node._children)
-            {
-                queue.Enqueue(child);
-            }
-        }
+        RunToString(this, ref result, "");
         return result;
     }
 }

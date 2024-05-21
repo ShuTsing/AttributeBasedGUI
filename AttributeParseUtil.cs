@@ -9,7 +9,7 @@ public static class AttributeParseUtil
 {
     public static List<MemberInfo> GetShowInInspectorMembers(Type targetType)
     {
-        var members = targetType.GetMembers(BindingFlags.Instance);
+        var members = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
         List<MemberInfo> showInInspectorMembers = new List<MemberInfo>();
         foreach (var member in members)
         {

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
+namespace AttributeBasedGUI;
+
 [Tool]
 public partial class WindowContainer : MarginContainer
 {
@@ -37,6 +39,7 @@ public partial class WindowContainer : MarginContainer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		base._Ready();
 	}
 	
 	private void SetTitleInfo()
@@ -82,16 +85,6 @@ public partial class WindowContainer : MarginContainer
 		
 	}
 
-	public WindowContainer()
-	{
-		AnchorsPreset = (int)MarginContainer.LayoutPreset.FullRect;
-		SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		SizeFlagsVertical = Control.SizeFlags.ExpandFill;
-		AddThemeConstantOverride("margin_left", 6);
-		AddThemeConstantOverride("margin_right", 6);
-		AddThemeConstantOverride("margin_bottom", 6);
-	}
-
 	public override void _EnterTree()
 	{
 		base._EnterTree();
@@ -100,6 +93,15 @@ public partial class WindowContainer : MarginContainer
 			OwnerWindow.Size = DefaultWindowSize;
 			OwnerWindow.Borderless = true;
 		}
+
+		OwnerWindow.ContentScaleAspect = Window.ContentScaleAspectEnum.Keep;
+		
+		AnchorsPreset = (int)MarginContainer.LayoutPreset.FullRect;
+		SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+		SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+		AddThemeConstantOverride("margin_left", 6);
+		AddThemeConstantOverride("margin_right", 6);
+		AddThemeConstantOverride("margin_bottom", 6);
 		
 		var windowBody = GD.Load<PackedScene>("res://addons/AttributeBasedGUI/Resources/Prefabs/PB_WindowBody.tscn").Instantiate();
 		AddChild(windowBody);
@@ -345,6 +347,7 @@ public partial class WindowContainer : MarginContainer
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		base._Process(delta);
 	}
 	
 	private void ResetState()
@@ -354,6 +357,7 @@ public partial class WindowContainer : MarginContainer
 	
 	public override void _Input(InputEvent @event)
 	{
+		base._Input(@event);
 		if (@event is InputEventMouseMotion mouseMotion)
 		{
 			SetMouseCursorShape(mouseMotion);

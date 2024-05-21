@@ -4,7 +4,7 @@ using System.Reflection;
 using Godot;
 namespace AttributeBasedGUI;
 
-public class ClassWindowContainer : WindowContainer
+public partial class ClassWindowContainer : WindowContainer
 {
     [Export]
     public Resource Content { get; set; }
@@ -20,11 +20,17 @@ public class ClassWindowContainer : WindowContainer
 
         var ownType = typeof(ClassWindowContainer);
         var contentMemberInfo = ownType.GetProperty("Content");
-        _fieldTree = new FieldTreeNode(contentMemberInfo);
+        _fieldTree = new FieldTreeNode(Content.GetType());
+        GD.Print(_fieldTree.ToString());
     }
     
-    public ClassWindowContainer()
+    public ClassWindowContainer() : base()
     {
+    }
+    
+    public override void _EnterTree()
+    {
+        base._EnterTree();
         BuildTreeByContent();
     }
 }
