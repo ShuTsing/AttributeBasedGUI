@@ -94,14 +94,12 @@ public partial class WindowContainer : MarginContainer
 			OwnerWindow.Borderless = true;
 		}
 
-		OwnerWindow.ContentScaleAspect = Window.ContentScaleAspectEnum.Keep;
-		
 		AnchorsPreset = (int)MarginContainer.LayoutPreset.FullRect;
 		SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 		SizeFlagsVertical = Control.SizeFlags.ExpandFill;
-		AddThemeConstantOverride("margin_left", 6);
-		AddThemeConstantOverride("margin_right", 6);
-		AddThemeConstantOverride("margin_bottom", 6);
+		AddThemeConstantOverride("margin_left", 4);
+		AddThemeConstantOverride("margin_right", 4);
+		AddThemeConstantOverride("margin_bottom", 4);
 		
 		var windowBody = GD.Load<PackedScene>("res://addons/AttributeBasedGUI/Resources/Prefabs/PB_WindowBody.tscn").Instantiate();
 		AddChild(windowBody);
@@ -348,6 +346,12 @@ public partial class WindowContainer : MarginContainer
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+		if (!Engine.IsEditorHint())
+		{
+            int dpi = DisplayServer.ScreenGetDpi(OwnerWindow.GetWindowId());
+            OwnerWindow.ContentScaleFactor = dpi / 96.0f;
+		}
+		
 	}
 	
 	private void ResetState()
