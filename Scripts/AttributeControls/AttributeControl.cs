@@ -11,7 +11,7 @@ public partial class AttributeControl : HBoxContainer
     public Theme ControlTheme => _theme ??= GD.Load<Theme>(ThemePath);
     private Theme _theme;
     
-    protected FieldTreeNode FieldTreeNode;
+    protected FieldTreeNode FieldTree;
     protected System.Object MasterObject;
     
     private void Init()
@@ -56,8 +56,12 @@ public partial class AttributeControl : HBoxContainer
 
     protected AttributeControl(FieldTreeNode fieldTreeNode, System.Object masterObject)
     {
-        FieldTreeNode = fieldTreeNode;
+        FieldTree = fieldTreeNode;
         MasterObject = masterObject;
+    }
+
+    public AttributeControl()
+    {
     }
 
 

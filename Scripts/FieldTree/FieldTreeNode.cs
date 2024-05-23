@@ -13,6 +13,8 @@ public class FieldTreeNode
     private readonly Dictionary<string, int> _childIndex = new Dictionary<string, int>();
     
     public bool IsLeaf => _children.Count == 0;
+    public int ChildCount => _children.Count;
+    public FieldTreeNode this[int index] => _children[index];
     
     public MemberInfo MemberInfo { get; protected set; }
     

@@ -32,5 +32,7 @@ public partial class ClassWindowContainer : WindowContainer
     {
         base._EnterTree();
         BuildTreeByContent();
+        var attributeControl = AttributeControlFactory.CreateControl(_fieldTree, Content);
+        ContentNode.AddChild(attributeControl);
     }
 }

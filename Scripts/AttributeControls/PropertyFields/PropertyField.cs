@@ -77,7 +77,7 @@ public partial class PropertyField : AttributeControl
     public override void _EnterTree()
     {
         base._EnterTree();
-        GD.Print("PropertyField _EnterTree");
+        _label = new Label();
         AddChild(_label);
         
         AddChild(_entity);

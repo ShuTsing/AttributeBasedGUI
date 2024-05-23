@@ -1,6 +1,6 @@
 using Godot;
 
-namespace AttributeBasedGUI.Scripts.AttributeControls;
+namespace AttributeBasedGUI;
 
 public partial class ObjectControl : AttributeControl
 {
@@ -29,10 +29,23 @@ public partial class ObjectControl : AttributeControl
         _vBoxContainer = new VBoxContainer();
         _vBoxContainer.SizeFlagsHorizontal = SizeFlags.Fill;
         _vBoxContainer.SizeFlagsVertical = SizeFlags.Fill;
+        _marginContainer.AddThemeConstantOverride("separation", 4);
         _marginContainer.AddChild(_vBoxContainer);
+
+        int n = FieldTree.ChildCount;
+        for (int i = 0; i < n; i++)
+        {
+            var child = FieldTree[i];
+            var control = AttributeControlFactory.CreateControl(child, MasterObject);
+            _vBoxContainer.AddChild(control);
+        }
     }
     
     public ObjectControl(FieldTreeNode fieldTreeNode, System.Object masterObject) : base(fieldTreeNode, masterObject)
+    {
+    }
+
+    public ObjectControl()
     {
     }
 }
