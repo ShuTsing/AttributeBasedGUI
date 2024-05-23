@@ -23,6 +23,8 @@ public partial class WindowContainer : MarginContainer
 	[Export]
 	public bool Resizable { get; set; } = true;
 	
+	protected Control ContentNode { get; private set; }
+	
 	private Window _window;
 	private Window OwnerWindow => _window ?? GetWindow();
 	
@@ -74,7 +76,11 @@ public partial class WindowContainer : MarginContainer
 		}
 
 		if (this.GetNode("Body/Content") is Control contentNode)
+		{
 			_windowContentControls.Add(contentNode);
+			ContentNode = contentNode;
+		}
+			
 			
 	}
 

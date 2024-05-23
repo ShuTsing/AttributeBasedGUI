@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
+namespace AttributeBasedGUI;
 [Tool]
 public partial class PropertyField : AttributeControl
 {
@@ -72,17 +73,6 @@ public partial class PropertyField : AttributeControl
         _label.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
         CreateInlineButtons();
     }
-    
-    public PropertyField(Object target, FieldInfo fieldInfo) : base()
-    {
-        _label = new Label();
-        _entity = new HBoxContainer();
-        _target = target;
-        _fieldInfo = fieldInfo;
-        GetAttributeInfo();
-        Theme = GD.Load<Theme>("res://addons/AttributeBasedGUI/Resources/ControlStyles/Themes/TH_MainTheme.tres");
-        _label.Theme = Theme;
-    }
 
     public override void _EnterTree()
     {
@@ -99,6 +89,10 @@ public partial class PropertyField : AttributeControl
             _entity.AddChild(button);
         }
 
+    }
+    
+    public PropertyField(FieldTreeNode fieldTreeNode, System.Object masterObject) : base(fieldTreeNode, masterObject)
+    {
     }
 
     protected virtual void AddChildControlsToEntity() {}
